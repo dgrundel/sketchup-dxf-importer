@@ -22,6 +22,8 @@ class SketchUpConnector {
         const el = document.createElement('svg');
         el.innerHTML = svg;
         document.body.appendChild(el);
+
+        console.log(helper);
     }
 }
 

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "DXF Importer for Sketchup",
   "scripts": {
+    "dev": "webpack --watch --progress --colors",
     "test": "mochapack --webpack-config webpack.config.js \"test/**/*.ts\"",
     "build": "webpack"
   },
