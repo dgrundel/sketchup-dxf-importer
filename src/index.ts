@@ -1,3 +1,3 @@
 const el = document.createElement('h1');
-el.textContent = 'Hello, world!';
+el.textContent = 'Hello, TypeScript!';
 document.body.appendChild(el);
