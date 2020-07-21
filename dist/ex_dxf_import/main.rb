@@ -21,9 +21,17 @@ module Grundel
       # max_height: 1000,
       style: UI::HtmlDialog::STYLE_DIALOG
     }.freeze
+    FILE_TYPE_STR = "DXF|*.dxf";
 
     def self.show_import_dialog
       dialog = UI::HtmlDialog.new(DIALOG_OPTIONS)
+
+      dialog.add_action_callback('getFile') do |_action_context, prev_path, prev_name|
+        file_path = UI.openpanel("Select File", Dir.home, FILE_TYPE_STR)
+        file_contents = File.read(file_path)
+        dialog.execute_script("sketchupConnector.receiveFileContents(#{file_contents.to_json})")
+      end
+
       dialog.set_file(DIALOG_HTML_PATH)
       dialog.show
     end
