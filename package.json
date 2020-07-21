@@ -1,0 +1,23 @@
+{
+  "name": "sketchup-dxf-importer",
+  "version": "1.0.0",
+  "description": "DXF Importer for Sketchup",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "keywords": [
+    "sketchup",
+    "dxf",
+    "import"
+  ],
+  "author": "Daniel Grundel",
+  "license": "MIT",
+  "dependencies": {
+    "dxf": "^4.4.2"
+  },
+  "devDependencies": {
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
+  }
+}
