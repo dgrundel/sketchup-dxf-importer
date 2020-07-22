@@ -61,50 +61,9 @@ class SketchUpReceiver {
     receiveImportInput(data: ImportInputData) {
         const helper = new Helper(data.fileContents);
         
-        // const svgElement = document.createElement('svg');
-        // svgElement.innerHTML = helper.toSVG();
-        // document.body.appendChild(svgElement);
-
-        // const elem = (name: string, parent: HTMLElement, text?: string) => {
-        //     const el = document.createElement(name);
-        //     if (text) {
-        //         el.textContent = text;
-        //     }
-        //     parent.appendChild(el);
-        //     return el;
-        // }
-
-        // const table = elem('table', document.body);
-        
-        // const thead = elem('thead', table);
-        // const tr = elem('tr', thead);                
-        // elem('th', tr, 'group');
-        // elem('th', tr, 'type');
-        // elem('th', tr, 'start');
-        // elem('th', tr, 'end');
-        // elem('th', tr, 'layer');
-        // elem('th', tr, 'colorNumber');
-        
-        // const tbody = elem('tbody', table);
-
-        // Object.keys(helper.groups).forEach(group => {
-        //     const entities = helper.groups[group as any];
-        //     entities.forEach(entity => {
-        //         const tr = elem('tr', tbody);
-                
-        //         elem('td', tr, group);
-        //         elem('td', tr, entity.type);
-        //         elem('td', tr, JSON.stringify(entity.start));
-        //         elem('td', tr, JSON.stringify(entity.end));
-        //         elem('td', tr, entity.layer.toString());
-        //         elem('td', tr, entity.colorNumber.toString());
-        //     });
-        // });
-
-        // table.appendChild(tbody);
-        // document.body.appendChild(table);
-        
-        // console.log(helper);
+        const svgElement = document.createElement('svg');
+        svgElement.innerHTML = helper.toSVG();
+        document.body.appendChild(svgElement);
 
         const geom: ImportedGeometry = {
             opName: 'Import',
