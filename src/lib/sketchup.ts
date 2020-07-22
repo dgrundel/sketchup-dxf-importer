@@ -48,7 +48,7 @@ const assertSketchUpReceiver = () => {
     }
 };
 
-export const setSketchUpReceiver = (receiver: SketchUpReceiver) => {
+export const setSketchUpReceiver = (receiver?: SketchUpReceiver) => {
     (window as any).sketchUpReceiver = receiver;
 }
 

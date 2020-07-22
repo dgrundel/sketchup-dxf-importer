@@ -3,6 +3,7 @@ import { Text } from '@fluentui/react';
 import { Helper, V3 } from 'dxf';
 import { sketchupEmitter, SketchUpReceiver, ImportInputData, ImportedGeometry, Point3d, setSketchUpReceiver } from '../lib/sketchup';
 import { SVG } from './SVG';
+import { UnitDropdown } from './UnitDropdown';
 
 const v3ToPoint3d = (v: V3): Point3d => [v.x, v.y, v.z];
 
@@ -24,6 +25,10 @@ export class App extends React.Component<{}, State> implements SketchUpReceiver 
             <Text variant={'mega'} block>
                 Hello, React!
             </Text>
+
+            <div>
+                <UnitDropdown />
+            </div>
 
             <div>
                 {this.state.svg && <SVG html={this.state.svg}/>}
