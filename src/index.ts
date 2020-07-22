@@ -21,27 +21,17 @@ const CONVERT_TO_INCHES: Array<(n: number) => number> = [
     n => n*36.0 // 'yd'
 ];
 
-interface Sketchup {
-    getFile: () => void;
-}
-
 interface ImportData {
     modelUnits: number; // Sketchup.active_model.options['UnitsOptions']['LengthUnit'],
     fileContents: string;
 }
 
-class SketchUpConnector {
-    private readonly sketchup: Sketchup;
+interface SketchupWindow {
+    getImportData: () => void;
+}
 
-    constructor() {
-        this.sketchup = (window as any).sketchup;
-    }
-
-    getFile() {
-        this.sketchup.getFile();
-    }
-
-    receiveFileContents(data: ImportData) {
+class SketchUpReceiver {
+    receiveImportData(data: ImportData) {
         const helper = new Helper(data.fileContents);
         const svg = helper.toSVG();
 
@@ -53,12 +43,12 @@ class SketchUpConnector {
     }
 }
 
-const sketchupConnector = new SketchUpConnector();
-(window as any).sketchupConnector = sketchupConnector;
-
+const sketchUpReceiver = new SketchUpReceiver();
+const sketchupWindow = (window as any).sketchup as SketchupWindow;
+(window as any).sketchUpReceiver = sketchUpReceiver;
 
 const el = document.createElement('h1');
 el.textContent = 'Hello, TypeScript!';
 document.body.appendChild(el);
 
-sketchupConnector.getFile();
+sketchupWindow.getImportData();
