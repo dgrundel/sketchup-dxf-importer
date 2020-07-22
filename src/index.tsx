@@ -1,4 +1,7 @@
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import { Helper, V3 } from 'dxf';
+import { App } from './components/App';
 
 // const UNIT_NAMES = ['in', 'ft', 'mm', 'cm', 'm', 'yd'];
 
@@ -61,9 +64,9 @@ class SketchUpReceiver {
     receiveImportInput(data: ImportInputData) {
         const helper = new Helper(data.fileContents);
         
-        const svgElement = document.createElement('svg');
-        svgElement.innerHTML = helper.toSVG();
-        document.body.appendChild(svgElement);
+        // const svgElement = document.createElement('svg');
+        // svgElement.innerHTML = helper.toSVG();
+        // document.body.appendChild(svgElement);
 
         const geom: ImportedGeometry = {
             opName: 'Import',
@@ -82,3 +85,8 @@ const sketchUpReceiver = new SketchUpReceiver();
 (window as any).sketchUpReceiver = sketchUpReceiver;
 
 sketchupEmitter.getImportInput();
+
+ReactDOM.render(
+    <App/>,
+    document.getElementById('root')
+);
