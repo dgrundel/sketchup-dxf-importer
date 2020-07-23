@@ -1,26 +1,27 @@
-import { Dropdown, DropdownMenuItemType, IDropdownOption } from '@fluentui/react';
+import { Dropdown, IDropdownOption } from '@fluentui/react';
 import * as React from 'react';
+import { UNIT_LABELS, Unit } from '../lib/units';
 
-const unitOptions = [
-  { key: 0, text: 'in' }, 
-  { key: 1, text: 'ft' }, 
-  { key: 2, text: 'mm' }, 
-  { key: 3, text: 'cm' }, 
-  { key: 4, text: 'm' }, 
-  { key: 5, text: 'yd' },
-];
+const unitOptions = UNIT_LABELS.map((text, key) => ({ key, text }));
 
-export const UnitDropdown = () => {
-  const [selectedKey, setSelectedItem] = React.useState<number>();
-  const onChange = (_event: React.FormEvent<HTMLDivElement>, item: IDropdownOption): void => setSelectedItem(item.key as number);
+export interface UnitDropdownProps {
+    label?: string;
+    onChange?: (unit?: Unit) => void;
+}
 
-  return (
-    <Dropdown
-      label="Unit"
-      selectedKey={selectedKey}
-      onChange={onChange}
-      placeholder="Select an option"
-      options={unitOptions}
-    />
-  );
+export const UnitDropdown = (props: UnitDropdownProps) => {
+    const [selectedKey, setSelectedItem] = React.useState<number>();
+    const onChange = (_event: React.FormEvent<HTMLDivElement>, item: IDropdownOption): void => {
+        const key = (item.key as Unit);
+        setSelectedItem(key);
+        props.onChange && props.onChange(key);
+    }
+
+    return <Dropdown
+        label={props.label}
+        selectedKey={selectedKey}
+        onChange={onChange}
+        placeholder="Select unit"
+        options={unitOptions}
+    />;
 };

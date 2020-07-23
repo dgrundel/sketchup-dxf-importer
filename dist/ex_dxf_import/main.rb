@@ -9,16 +9,12 @@ module Grundel
     DIALOG_OPTIONS = {
       dialog_title: 'Import',
       preferences_key: 'com.grundel.dxfImport',
-      scrollable: false,
+      scrollable: true,
       resizable: true,
-      width: 1100,
-      height: 800,
-      # left: 100,
-      # top: 100,
-      min_width: 1000,
-      min_height: 500,
-      # max_width: 1000,
-      # max_height: 1000,
+      width: 800,
+      height: 600,
+      min_width: 800,
+      min_height: 600,
       style: UI::HtmlDialog::STYLE_DIALOG
     }.freeze
     FILE_TYPE_STR = "DXF|*.dxf";

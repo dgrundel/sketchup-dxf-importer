@@ -1,14 +1,16 @@
-import * as React from 'react';
-import { Text } from '@fluentui/react';
+import { PrimaryButton } from '@fluentui/react';
 import { Helper, V3 } from 'dxf';
-import { sketchupEmitter, SketchUpReceiver, ImportInputData, ImportedGeometry, Point3d, setSketchUpReceiver } from '../lib/sketchup';
+import * as React from 'react';
+import { ImportedGeometry, ImportInputData, Point3d, setSketchUpReceiver, sketchupEmitter, SketchUpReceiver } from '../lib/sketchup';
+import { Unit, convertV3ToInches } from '../lib/units';
 import { SVG } from './SVG';
 import { UnitDropdown } from './UnitDropdown';
 
 const v3ToPoint3d = (v: V3): Point3d => [v.x, v.y, v.z];
 
 interface State {
-    svg?: string;
+    helper?: Helper;
+    fileUnits: Unit;
 }
 
 export class App extends React.Component<{}, State> implements SketchUpReceiver {
@@ -16,23 +18,26 @@ export class App extends React.Component<{}, State> implements SketchUpReceiver 
     constructor(props: any) {
         super(props);
 
-        this.state = {};
+        this.state = {
+            fileUnits: Unit.in,
+        };
         setSketchUpReceiver(this);
     }
     
     render() {
         return <div>
-            <Text variant={'mega'} block>
-                Hello, React!
-            </Text>
-
             <div>
-                <UnitDropdown />
+                {this.state.helper && <SVG html={this.state.helper.toSVG()}/>}
             </div>
-
-            <div>
-                {this.state.svg && <SVG html={this.state.svg}/>}
-            </div>
+            <p>
+                <UnitDropdown 
+                    label="DXF File Units"
+                    onChange={this.setFileUnits.bind(this)}
+                />
+            </p>
+            <p style={{ textAlign: 'right' }}>
+                <PrimaryButton text="Import" onClick={this.insertGeometry.bind(this)} />
+            </p>
         </div>;
     }
 
@@ -44,19 +49,32 @@ export class App extends React.Component<{}, State> implements SketchUpReceiver 
         setSketchUpReceiver(undefined);
     }
 
+    setFileUnits(fileUnits?: Unit) {
+        if (fileUnits) {
+            this.setState({ fileUnits });
+        }
+    }
+
     receiveImportInput(data: ImportInputData) {
         const helper = new Helper(data.fileContents);
-        
-        this.setState({ svg: helper.toSVG() });
+        this.setState({ helper });
+    }
 
-        const geom: ImportedGeometry = {
-            opName: 'Import',
-            lines: helper.denormalised.map(entity => ({
-                start: v3ToPoint3d(entity.start),
-                end: v3ToPoint3d(entity.end),
-            }))
-        };
+    insertGeometry() {
+        const helper = this.state.helper;
+        const fileUnits = this.state.fileUnits;
+        if (helper) {
 
-        // sketchupEmitter.insertGeometry(geom);
+
+            const geom: ImportedGeometry = {
+                opName: 'Import',
+                lines: helper.denormalised.map(entity => ({
+                    start: v3ToPoint3d(convertV3ToInches(entity.start, fileUnits)),
+                    end: v3ToPoint3d(convertV3ToInches(entity.end, fileUnits)),
+                }))
+            };
+    
+            sketchupEmitter.insertGeometry(geom);
+        }
     }
 }
