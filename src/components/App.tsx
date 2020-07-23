@@ -5,6 +5,7 @@ import { ImportedGeometry, ImportInputData, Point3d, setSketchUpReceiver, sketch
 import { Unit, convertV3ToInches } from '../lib/units';
 import { SVG } from './SVG';
 import { UnitDropdown } from './UnitDropdown';
+import { SpinnerOverlay } from './SpinnerOverlay';
 
 const v3ToPoint3d = (v: V3): Point3d => [v.x, v.y, v.z];
 
@@ -25,19 +26,25 @@ export class App extends React.Component<{}, State> implements SketchUpReceiver 
     }
     
     render() {
+        const helper = this.state.helper;
+        
+        if (!helper) {
+            return <SpinnerOverlay/>;
+        }
+
         return <div>
-            <div>
+            <div className="spaced">
                 {this.state.helper && <SVG html={this.state.helper.toSVG()}/>}
             </div>
-            <p>
+            <div className="spaced">
                 <UnitDropdown 
                     label="DXF File Units"
                     onChange={this.setFileUnits.bind(this)}
                 />
-            </p>
-            <p style={{ textAlign: 'right' }}>
+            </div>
+            <div className="spaced" style={{ textAlign: 'right' }}>
                 <PrimaryButton text="Import" onClick={this.insertGeometry.bind(this)} />
-            </p>
+            </div>
         </div>;
     }
 

@@ -1,0 +1,68 @@
+@import "spinner";
+
+$spacing: 1.5rem;
+$half-spacing: $spacing / 2;
+$scrollbar-size: 6px;
+
+::-webkit-scrollbar {
+    height: $scrollbar-size;
+    width: $scrollbar-size;
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #232323;
+    -webkit-border-radius: .1em;
+}
+
+html {
+    font-size: 15px;
+}
+
+body {
+    margin: $spacing;
+}
+
+.spaced {
+    margin: $spacing 0;
+}
+
+#overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    z-index: 10000;
+    background-color: #0095ff;
+
+    @mixin dialogIcon($content) {
+        $size: 8vh;
+        content: $content;
+        position: absolute;
+        top: calc(#{-1 * $size} - #{$spacing});
+        left: calc(50% - #{$size / 2});
+        width: $size;
+        height: $size;
+        font-size: $size;
+        line-height: $size;
+        text-align: center;
+        background-color: rgba(255,255,255,0.15);
+        border-radius: .5vh;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .sk-cube-grid.sk-cube-grid {
+        width: 8vh;
+        height: 8vh;
+        margin: 46vh auto;
+
+        .sk-cube {
+            background-color: #fff;
+        }
+    }
+}

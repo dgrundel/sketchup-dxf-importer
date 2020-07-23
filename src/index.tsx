@@ -4,6 +4,7 @@ import { App } from './components/App';
 import { initializeIcons } from '@uifabric/icons';
 
 initializeIcons('fonts/');
+import './css/style.scss';
 
 ReactDOM.render(
     <App/>,
