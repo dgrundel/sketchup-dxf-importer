@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 import { App } from './components/App';
 import { initializeIcons } from '@uifabric/icons';
 
-initializeIcons('../fonts/');
+initializeIcons('fonts/');
 
 ReactDOM.render(
     <App/>,
